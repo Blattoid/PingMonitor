@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Net.NetworkInformation;
 
@@ -41,10 +42,12 @@ namespace PingMonitor
             bool pre_ping = isPingable(addr); //set a baseline
             if (pre_ping)
             {
+                change_back_colour(ConsoleColor.Green);
                 Console.WriteLine("Host is currently online.");
             }
             else
             {
+                change_back_colour(ConsoleColor.Red);
                 Console.WriteLine("Host is currently offline.");
             }
             for (; ; )
@@ -59,14 +62,21 @@ namespace PingMonitor
                     pre_ping = pingable;
                     if (pingable)
                     {
+                        change_back_colour(ConsoleColor.Green);
                         Console.WriteLine(addr + " came online at " + time);
                     }
                     else
                     {
+                        change_back_colour(ConsoleColor.Red);
                         Console.WriteLine(addr + " went offline at " + time);
                     }
                 }
             }
+        }
+        static void change_back_colour(ConsoleColor colour)
+        {
+            Console.BackgroundColor = colour;
+            Console.Clear();
         }
     }
 }
